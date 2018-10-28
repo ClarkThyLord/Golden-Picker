@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html class="h-100">
+  <head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- <link rel="icon" href="./static/assets/icons/golden_picker.svg"> -->
+		<title>Golden Picker</title>
+		<meta name="author" content="ClarkThyLord">
+		<meta name="description" content="Make selections at random, with Golden Picker a roulette-type application!">
+		
+    <% if (htmlWebpackPlugin.options.nodeModules) { %>
+      <!-- Add `node_modules/` to global paths so `require` works properly in development -->
+      <script>
+        require('module').globalPaths.push('<%= htmlWebpackPlugin.options.nodeModules.replace(/\\/g, '\\\\') %>')
+      </script>
+    <% } %>
+  </head>
+  <body class="h-100">
+    <div class="h-100" id="app"></div>
+
+    <!-- Set `__static` path to static files in production -->
+    <% if (!process.browser) { %>
+      <script>
+        if (process.env.NODE_ENV !== 'development') window.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+      </script>
+    <% } %>
+
+    <!-- webpack builds are automatically injected -->
+  </body>
+</html>
