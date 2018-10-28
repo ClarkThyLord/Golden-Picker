@@ -5,6 +5,10 @@
 		<div class="d-flex flex-column">
 			<pocket _id="0" name="something"></pocket>
 		</div>
+
+		<div class="m-2 w-100 text-center">
+			<button type="button" title="Create a pocket!" class="btn btn-success">+ Create</button>
+		</div>
   </div>
 </template>
 
