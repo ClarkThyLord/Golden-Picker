@@ -17,7 +17,7 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "golden-picker",
+    "productName": "Golden Picker",
     "appId": "xyz.potential.goldenpicker",
     "directories": {
       "output": "build"
