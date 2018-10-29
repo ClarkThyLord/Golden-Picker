@@ -8,9 +8,10 @@ class db {
 		this.events = new events.EventEmitter()
 
 		this._pocket = {
+			id: 0,
 			img: '',
 			name: '',
-			children: []
+			pockets: []
 		}
 
 		this.data = []
@@ -78,12 +79,19 @@ class db {
 		return valid_data
 	}
 
-	pocket_search(queries) {
+	pocket_search(queries, raw) {
 		let results = []
 
 		for (let i = 0; i < this.data.length; i++) {
 			for (let query of Object.keys(queries)) {
-				if (this.data[i][query] === queries[query]) results.push(i) break;
+				if (this.data[i][query].toLowerCase().indexOf(queries[query]) != -1) {
+					if (raw) {
+						results.push(this.data[i]);
+					} else {
+						results.push(i);
+					}
+					break;
+				}
 			}
 		}
 
