@@ -13,7 +13,7 @@
 			</div>
 			<div class="m-1 row d-flex flex-fill">
 				<!-- IN -->
-				<div class="m-1 flex-fill border rounded">
+				<div class="m-1 pocket-container flex-fill border rounded">
 
 				</div>
 

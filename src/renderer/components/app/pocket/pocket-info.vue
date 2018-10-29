@@ -12,7 +12,7 @@
 
 				<div class="modal-body">
 					<div class="m-2 p-1 row">
-						<div style="border-style: dashed !important; border-width: 3px !important;" class="m-1 flex-fill border rounded">
+						<div style="border-style: dashed !important; border-width: 3px !important;" class="m-1 pocket-container flex-fill border rounded">
 
 						</div>
 
