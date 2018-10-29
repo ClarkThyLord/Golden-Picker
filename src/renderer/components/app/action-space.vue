@@ -7,6 +7,7 @@
 		<div class="m-2 p-1 d-flex flex-column flex-fill border rounded">
 			<div class="mt-1 btn-group justify-content-center row">
 				<button type="button" title="Start roulette!" class="btn btn-primary">Go!</button>
+				<button type="button" title="Start roulette!" class="btn btn-secondary">⚙ Settings</button>
 				<button type="button" title="Add a temporary pocket to the roulette!" class="btn btn-success">+ Add</button>
 				<button type="button" title="Reset roulette!" class="btn btn-danger">↻ Reset</button>
 			</div>

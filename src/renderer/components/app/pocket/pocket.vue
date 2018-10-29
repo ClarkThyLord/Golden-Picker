@@ -7,7 +7,7 @@
 		</div>
 
 		<div>
-			<img src="~@/assets/icons/feather/info.svg" title="View pocket's info!" style="cursor: pointer;" class="m-2" />
+			<img src="~@/assets/icons/feather/info.svg" title="View pocket's info!" data-toggle="modal" data-target="#pocket-info" style="cursor: pointer;" class="m-2" />
 		</div>
   </div>
 </template>
