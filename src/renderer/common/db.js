@@ -8,7 +8,7 @@ class db {
 		this.events = new events.EventEmitter()
 
 		this._pocket = {
-			id: 0,
+			id: '',
 			img: '',
 			name: '',
 			pockets: []
@@ -105,9 +105,9 @@ class db {
 	}
 
 	pocket_create(data) {
-		let id = JSON.parse(localStorage.getItem('id_count') || "0");
+		let id = localStorage.getItem('id_count') || "0";
 		let pocket = Object.assign({}, this._pocket, this.pocket_data_validation(data), {id: id});
-		localStorage.setItem('id_count', id + 1)
+		localStorage.setItem('id_count', JSON.parse(id) + 1)
 
 		this.data.push(pocket);
 
