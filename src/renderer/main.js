@@ -5,7 +5,17 @@ import $ from 'jquery'
 window.$ = $
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+
+import dragula from 'dragula'
 import 'dragula/dist/dragula.min.css'
+window.dragula = dragula({
+	copy: true,
+	revertOnSpill: true,
+	ignoreInputTextSelection: true,
+	isContainer: function (el) {
+		return el.classList.contains('pocket-space');
+	}
+})
 
 import util from './common/util'
 window.util = util

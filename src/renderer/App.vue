@@ -17,21 +17,6 @@
 </template>
 
 <script>
-	import dragula from 'dragula'
-
-	window._dragula = dragula({
-		copy: true,
-		copySortSource: false,
-		revertOnSpill: true,
-		ignoreInputTextSelection: true,
-	  isContainer: function (el) {
-	    return el.classList.contains('pocket-container');
-	  },
-	  moves: function (el, source, handle, sibling) {
-	    return el.dataset.id && el.dataset.id != "";
-	  }
-	})
-
 	import SideBar from './components/app/side-bar'
 	import ActionSpace from './components/app/action-space'
 

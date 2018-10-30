@@ -29,6 +29,7 @@ class db {
 	}
 
 	async reset(refresh) {
+		localStorage.clear();
 		await localforage.clear()
 
 		if (refresh == undefined || refresh == true) location.reload();
@@ -104,7 +105,9 @@ class db {
 	}
 
 	pocket_create(data) {
-		let pocket = Object.assign({}, this._pocket, this.pocket_data_validation(data));
+		let id = JSON.parse(localStorage.getItem('id_count') || "0");
+		let pocket = Object.assign({}, this._pocket, this.pocket_data_validation(data), {id: id});
+		localStorage.setItem('id_count', id + 1)
 
 		this.data.push(pocket);
 
