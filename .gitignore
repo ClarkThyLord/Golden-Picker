@@ -1,10 +1,22 @@
+# Temp files
 .DS_Store
-dist/electron/*
-dist/web/*
-build/*
-!build/icons
+
+# Node modules
 node_modules/
+
+# Dev files
 npm-debug.log
 npm-debug.log.*
 thumbs.db
 !.gitkeep
+
+# Build files
+build/*
+!build/icons
+
+# Dist files
+dist/*
+!dist/web
+!dist/windows
+!dist/mac
+!dist/linux
