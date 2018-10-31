@@ -9,7 +9,7 @@
 		<div style="height: 50%;" class="m-2 p-1 d-flex flex-column border rounded">
 			<div class="mt-1 btn-group justify-content-center row">
 				<button type="button" title="Start roulette!" :disabled="pool.in.length === 0" @click="roulette" class="btn btn-primary">Go!</button>
-				<button type="button" title="Settings for roulette!" class="btn btn-secondary">⚙ Settings</button>
+				<button type="button" title="Settings for roulette!" data-toggle="modal" data-target="#settings-menu" class="btn btn-secondary">⚙ Settings</button>
 				<button type="button" title="Add a temporary pocket to the roulette!" class="btn btn-success">+ Add</button>
 				<button type="button" title="Reset roulette!" @click="reset" class="btn btn-danger">↻ Reset</button>
 			</div>
@@ -17,12 +17,12 @@
 			<div class="m-1 flex-fill row">
 				<!-- IN POOL -->
 				<div style="overflow-x: hidden; overflow-y: auto;" class="m-1 p-0 col pocket-space border rounded" data-pool="in">
-					<pocket v-for="pocket in pool.in" :profile="pocket"></pocket>
+					<pocket v-for="pocket in pool.in" :hint="'Drag out to remove from pool!'" :profile="pocket"></pocket>
 				</div>
 
 				<!-- OUT POOL -->
 				<div style="overflow-x: hidden; overflow-y: auto;" class="m-1 p-0 col pocket-space border rounded" data-pool="out">
-					<pocket v-for="pocket in pool.out" :profile="pocket"></pocket>
+					<pocket v-for="pocket in pool.out" :hint="'Drag into pool to append to pool!'" :profile="pocket"></pocket>
 				</div>
 			</div>
 		</div>
@@ -47,9 +47,7 @@
 		},
 		methods: {
 			roulette: function () {
-				let result = Math.floor(Math.random() * this.pool.in.length);
-				console.log(result);
-				this.$el.querySelector('#result').innerHTML = this.pool.in[result].name;
+				this.$el.querySelector('#result').innerHTML = this.pool.in[Math.floor(Math.random() * this.pool.in.length)].name;
 				this.pool.out.push(this.pool.in.pop(result))
 			},
 			reset: function () {
@@ -73,6 +71,3 @@
 		}
   }
 </script>
-
-<style>
-</style>

@@ -1,5 +1,7 @@
 <template>
   <div class="m-0 p-0 w-100 h-100 row" id="app">
+		<settings-menu></settings-menu>
+
 		<pocket-add></pocket-add>
 		<pocket-remove></pocket-remove>
 		<pocket-info></pocket-info>
@@ -17,6 +19,8 @@
 </template>
 
 <script>
+	import SettingsMenu from './components/app/settings-menu'
+
 	import SideBar from './components/app/side-bar'
 	import ActionSpace from './components/app/action-space'
 
@@ -24,11 +28,17 @@
 	import PocketRemove from './components/app/pocket/pocket-remove'
 	import PocketInfo from './components/app/pocket/pocket-info'
 
+	window.settings = {
+	}
+
   export default {
     name: 'golden-picker',
 		components: {
+			SettingsMenu,
+
 			SideBar,
 			ActionSpace,
+
 			PocketAdd,
 			PocketRemove,
 			PocketInfo

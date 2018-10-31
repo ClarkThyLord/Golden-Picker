@@ -126,7 +126,7 @@ class db {
 
 		for (let id of ids) {
 			if (this.data[id]) {
-				pockets.push(this.data.pop[id])
+				pockets.push(this.data.splice(id, 1)[0])
 			}
 		}
 
