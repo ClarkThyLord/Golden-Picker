@@ -1,8 +1,14 @@
 <template>
   <div class="m-0 p-0 h-100 d-flex flex-column" id="action-space">
-		<div class="m-2 flex-fill">
-			<div id="result">
+		<div style="max-height: 50%;" class="m-2 w-100 h-100 flex-fill">
+			<div v-if="result" class="text-center">
+				<img v-if="result.img" :src="result.img" alt="POCKET IMG" style="min-width: 10%; max-width: 15%;" class="m-1 img-fluid rounded" />
 
+				<h1>
+					<i>
+						{{ result.name }}
+					</i>
+				</h1>
 			</div>
 		</div>
 
@@ -27,7 +33,7 @@
 
 				  <div v-for="(pocket, index) in pool.in" :data-id="index" class="d-flex bg-secondary text-white border border-dark shadow">
 						<div class="p-2 w-100 text-truncate">
-							<img v-if="!!pocket.img" :src="pocket.img" alt="PROFILE IMG" width="32" height="32" class="m-1 rounded" />
+							<img v-if="!!pocket.img" :src="pocket.img" alt="POCKET IMG" width="32" height="32" class="m-1 rounded" />
 
 							<i>
 								{{ pocket.name }}
@@ -52,7 +58,7 @@
 								{{ pocket.name }}
 							</i>
 
-							<img v-if="!!pocket.img" :src="pocket.img" alt="PROFILE IMG" width="32" height="32" class="m-1 rounded" />
+							<img v-if="!!pocket.img" :src="pocket.img" alt="POCKET IMG" width="32" height="32" class="m-1 rounded" />
 						</div>
 				  </div>
 				</div>
@@ -64,43 +70,44 @@
 <script>
 	import pocket from './pocket/pocket'
 
+	function data() {
+		return {
+			result: {},
+			pool: {
+				in: [],
+				out: []
+			}
+		}
+	}
+
   export default {
     name: 'action-space',
 		components: {
 			pocket
 		},
-		data: function () {
-			return {
-				pool: {
-					in: [],
-					out: []
-				}
-			}
-		},
+		data: data,
 		methods: {
 			roulette: function () {
-				this.$el.querySelector('#result').innerHTML = this.pool.in[Math.floor(Math.random() * this.pool.in.length)].name;
-				this.pool.out.push(this.pool.in.pop(result))
+				let result = Math.floor(Math.random() * this.pool.in.length)
+				Object.assign(this.result, this.pool.in[result]);
+				this.pool_remove(result)
 			},
 			pool_add: function (pocket) {
 				if (typeof pocket === 'object') {
 					this.pool.in.push(pocket);
 				} else {
-					this.pool.in.push(this.pool.out.pop(pocket))
+					this.pool.in.push((this.pool.out.splice(pocket, 1))[0])
 				}
 			},
 			pool_remove: function (pocket) {
 				if (typeof pocket === 'object') {
 					this.pool.out.push(pocket);
 				} else {
-					this.pool.out.push(this.pool.in.pop(pocket))
+					this.pool.out.push((this.pool.in.splice(pocket, 1))[0])
 				}
 			},
 			reset: function () {
-				this.pool = Object.assign({}, this.pool, {
-					in: [],
-					out: []
-				})
+				Object.assign(this.$data, data())
 			}
 		},
 		mounted: function () {
@@ -109,7 +116,7 @@
 
 				window.dragula.cancel();
 				if (target.dataset.pool === 'in') {
-					this.pool_add(db.pocket_search({id: el.dataset.id}, true).data[0]);
+					this.pool_add(db.pocket_search({id: el.dataset.id}, true).data[0])
 				}
 			})
 		}
