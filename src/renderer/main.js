@@ -14,7 +14,13 @@ window.dragula = dragula({
 	ignoreInputTextSelection: true,
 	isContainer: function (el) {
 		return el.classList.contains('pocket-space');
-	}
+	},
+  moves: function (el, source, handle, sibling) {
+    return source.classList.contains('pocket-drag') || el.classList.contains('draggable');
+  },
+  accepts: function (el, target, source, sibling) {
+    return target.classList.contains('pocket-drop');
+  }
 })
 
 import util from './common/util'

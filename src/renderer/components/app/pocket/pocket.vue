@@ -1,10 +1,10 @@
 <template>
-  <div :data-id="profile.id" style="cursor: move;" class="d-flex bg-secondary text-white border border-dark shadow" id="pocket">
-		<div :title="profile.name + (hint ? '\nHint:\n' + hint : '')" class="p-2 w-100 text-truncate">
-			<img v-if="!!profile.img" :src="profile.img" alt="PROFILE IMG" width="32" height="32" class="m-1 rounded" />
+  <div :data-id="pocket.id" class="d-flex bg-secondary text-white border border-dark shadow" :class="{'draggable': draggable}" id="pocket">
+		<div :title="pocket.name + (hint ? '\nHint:\n' + hint : '')" class="p-2 w-100 text-truncate">
+			<img v-if="!!pocket.img" :src="pocket.img" alt="pocket IMG" width="32" height="32" class="m-1 rounded" />
 
 			<i>
-				{{ profile.name }}
+				{{ pocket.name }}
 			</i>
 		</div>
 
@@ -19,9 +19,12 @@
 <script>
   export default {
     name: 'pocket',
-		props: ['hint', 'profile']
+		props: ['hint', 'pocket', 'draggable']
   }
 </script>
 
-<style>
+<style scoped>
+	.draggable {
+		cursor: move;
+	}
 </style>

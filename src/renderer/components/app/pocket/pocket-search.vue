@@ -2,8 +2,8 @@
   <div class="d-flex flex-column border rounded" id="pocket-search">
 		<input type="text" v-model="filter" placeholder="Search..." title="Search for a pocket..." style="position: sticky; top: 0px;" class="p-2 w-100 shadow" />
 
-		<div class="d-flex flex-column pocket-space">
-			<pocket v-for="pocket in filtered_pockets" :hint="'Drag into pool to append!'" :profile="pocket"></pocket>
+		<div class="d-flex flex-column pocket-space pocket-drag">
+			<pocket v-for="pocket in filtered_pockets" :hint="'Drag into pool to append!'" :pocket="pocket" :draggable="true"></pocket>
 		</div>
   </div>
 </template>
