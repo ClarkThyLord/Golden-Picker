@@ -1,5 +1,6 @@
 <template>
   <div class="m-0 p-0 w-100 h-100 row" id="app">
+		<new-user></new-user>
 		<settings-menu></settings-menu>
 
 		<pocket-add></pocket-add>
@@ -19,6 +20,7 @@
 </template>
 
 <script>
+	import NewUser from './components/app/new-user'
 	import SettingsMenu from './components/app/settings-menu'
 
 	import SideBar from './components/app/side-bar'
@@ -34,6 +36,7 @@
   export default {
     name: 'golden-picker',
 		components: {
+			NewUser,
 			SettingsMenu,
 
 			SideBar,
@@ -42,6 +45,14 @@
 			PocketAdd,
 			PocketRemove,
 			PocketInfo
+		},
+		mounted: function () {
+			window.$(function () {
+				if (!localStorage.getItem('new-user')) {
+					window.$('#new-user').modal('show')
+					localStorage.setItem('new-user', true)
+				}
+			})
 		}
   }
 </script>

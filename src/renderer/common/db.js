@@ -17,15 +17,17 @@ class db {
 		this.data = []
 	}
 
+	async default() {
+		let data = await window.$.getJSON('./static/data.json')
+		for (let student of data) {
+			this.pocket_create(student)
+		}
+	}
+
 	async setup() {
 		let loaded_data = await this.load()
 		if (loaded_data.success) {
 			this.data = loaded_data.data;
-		} else {
-			let data = await window.$.getJSON('./static/data.json')
-			for (let student of data) {
-				this.pocket_create(student)
-			}
 		}
 
 		console.log(`DATABASE IS DONE SETTING UP!\nVersion: ${this.version}`)
