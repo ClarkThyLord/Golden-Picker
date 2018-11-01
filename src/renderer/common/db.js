@@ -11,6 +11,7 @@ class db {
 			pocket: {
 				img: '',
 				name: '',
+				chance: 1,
 				pockets: []
 			}
 		}
@@ -18,7 +19,7 @@ class db {
 		this.data = []
 	}
 
-	async default() {
+	async default () {
 		let data = await window.$.getJSON('./static/data.json')
 		for (let student of data) {
 			this.pocket_add(student)
@@ -104,7 +105,9 @@ class db {
 
 	pocket_add(data) {
 		let id = localStorage.getItem('id_count') || "0";
-		let pocket = Object.assign(window.util.pocket_create(data), {id: id});
+		let pocket = Object.assign(window.util.pocket_create(data), {
+			id: id
+		});
 		localStorage.setItem('id_count', JSON.parse(id) + 1)
 
 		this.data.push(pocket);

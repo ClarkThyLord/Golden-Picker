@@ -80,7 +80,9 @@
 						</div>
 
 						<div class="p-2 d-flex">
-							<img src="~@/assets/icons/feather/trash.svg" title="Delete pocket from poo!" @click="pool_in_delete(index)" style="cursor: pointer;" class="m-2" />
+							<input type="number" min="1" max="100" v-model="pocket.chance" />
+
+							<img src="~@/assets/icons/feather/trash.svg" title="Delete pocket from pool!" @click="pool_in_delete(index)" style="cursor: pointer;" class="m-2" />
 							<img src="~@/assets/icons/feather/arrow-right.svg" title="Remove pocket from pool!" @click="pool_remove(index)" style="cursor: pointer;" class="m-2" />
 						</div>
 				  </div>
@@ -99,7 +101,7 @@
 					<div v-for="(pocket, index) in pool_out_filtered" :data-id="index" class="d-flex bg-secondary text-white border border-dark shadow">
 						<div class="p-2 d-flex">
 							<img src="~@/assets/icons/feather/arrow-left.svg" title="Add pocket to pool!" @click="pool_add(index)" style="cursor: pointer;" class="m-2" />
-							<img src="~@/assets/icons/feather/trash.svg" title="Delete pocket from poo!" @click="pool_out_delete(index)" style="cursor: pointer;" class="m-2" />
+							<img src="~@/assets/icons/feather/trash.svg" title="Delete pocket from pool!" @click="pool_out_delete(index)" style="cursor: pointer;" class="m-2" />
 						</div>
 
 						<div class="p-2 w-100 text-right text-truncate">
@@ -126,6 +128,7 @@
 			grp_num: 1,
 			grp_s_num: 1,
 			results: [],
+			sink: [],
 			pool: {
 				in_filter: '',
 				in: [],
@@ -233,6 +236,17 @@
 				} else {
 					return this.pool.out.filter(pocket => pocket.name.toLowerCase().indexOf(this.pool.out_filter) != -1)
 				}
+			}
+		},
+		watch: {
+			'pool.in': function () {
+				this.sink = []
+				for (let i = 0; i < this.pool.in.length; i++) {
+					for (let c = 0; c < this.pool.in[i].chance; c++) {
+						this.sink.push(i)
+					}
+				}
+				console.log(JSON.stringify(this.sink));
 			}
 		},
 		mounted: function () {
