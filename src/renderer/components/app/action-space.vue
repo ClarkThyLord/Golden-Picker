@@ -80,7 +80,7 @@
 						</div>
 
 						<div class="p-2 d-flex">
-							<input type="number" min="1" max="100" v-model="pocket.chance" />
+							<input type="number" title="Chance to choose this pocket!" min="1" max="100" v-model="pocket.chance" @change="sink_update" />
 
 							<img src="~@/assets/icons/feather/trash.svg" title="Delete pocket from pool!" @click="pool_in_delete(index)" style="cursor: pointer;" class="m-2" />
 							<img src="~@/assets/icons/feather/arrow-right.svg" title="Remove pocket from pool!" @click="pool_remove(index)" style="cursor: pointer;" class="m-2" />
@@ -145,10 +145,22 @@
 		},
 		data: data,
 		methods: {
+			sink_update: function () {
+				this.sink = []
+				for (let i = 0; i < this.pool.in.length; i++) {
+					for (let c = 0; c < this.pool.in[i].chance; c++) {
+						this.sink.push(i)
+					}
+				}
+				console.log(JSON.stringify(this.sink));
+			},
+			sink_get: function () {
+				return this.sink[Math.floor(Math.random() * this.sink.length)];
+			},
 			roulette: function () {
 				this.results = [];
 				if (this.type == 0) {
-					let result = Math.floor(Math.random() * this.pool.in.length)
+					let result = this.sink_get();
 
 					this.results.push([this.pool.in[result]]);
 
@@ -159,7 +171,7 @@
 
 					for (let i = 0; i < grp_s_num; i++) {
 						for (let s = 0; s < grp_num; s++) {
-							let result = Math.floor(Math.random() * this.pool.in.length)
+							let result = this.sink_get();
 
 							if (!this.results[s]) this.results.push([]);
 
