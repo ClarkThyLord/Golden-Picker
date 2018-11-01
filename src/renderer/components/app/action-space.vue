@@ -22,22 +22,25 @@
 				<div class="col-4 text-center">
 					<div class="btn-group">
 						<button type="button" title="Start roulette!" :disabled="pool.in.length === 0" @click="roulette" class="btn btn-primary">Go!</button>
-						<select v-model="type">
+						<select v-model="type" title="Type of roulette!">
 							<option value="0">
-								Individuals
+								Individual
 							</option>
 							<option value="1">
-								Teams
+								Sets
 							</option>
 						</select>
-						<input v-if="type == '1'" type="number" title="Number of teams!" min="1" v-model="grp_num" />
+
+						<input v-if="type == '1'" type="number" title="Number of sets!" min="1" v-model="grp_num" />
+						<input v-if="type == '1'" type="number" title="Number of pockets per set!" min="1" v-model="grp_s_num" />
 						<button type="button" title="Reset roulette!" @click="reset" class="btn btn-danger">↻<span class="d-none d-lg-inline"> Reset</span></button>
 					</div>
 				</div>
 
 				<div class="col-4 text-right">
 					<div v-if="pool.out.length != 0" class="btn-group">
-						<button type="button" title="Return all pockets to pool!" :disabled="pool.out.length == 0" @click="out_to_in" class="btn btn-secondary"><img src="~@/assets/icons/feather/arrow-left.svg" /><span class="d-none d-lg-inline"> Return all</span></button>
+						<button type="button" title="Return all pockets to pool!" @click="out_to_in" class="btn btn-secondary"><img src="~@/assets/icons/feather/arrow-left.svg" /><span class="d-none d-lg-inline"> Return all</span></button>
+						<button type="button" title="Invert usable & used pockets!" @click="invert_in_and_out" class="btn btn-secondary"><img src="~@/assets/icons/feather/switch.svg" width="16" /><span class="d-none d-lg-inline"> Invert</span></button>
 					</div>
 				</div>
 			</div>
@@ -108,6 +111,7 @@
 		return {
 			type: 0,
 			grp_num: 1,
+			grp_s_num: 1,
 			result: {},
 			pool: {
 				in_filter: '',
@@ -146,6 +150,11 @@
 				} else {
 					this.pool.out.push((this.pool.in.splice(pocket, 1))[0])
 				}
+			},
+			invert_in_and_out: function () {
+				let temp = this.pool.in;
+				this.pool.in = this.pool.out;
+				this.pool.out = temp;
 			},
 			in_to_out: function () {
 				if (this.pool.in.length == 0) return;
