@@ -18,10 +18,10 @@
 
 		<div style="height: 50%;" class="m-2 p-2 d-flex flex-column bg-white border rounded">
 			<div class="d-flex">
-				<div class="col-4 text-left">
+				<div class="col text-left">
 				</div>
 
-				<div class="col-4 text-center">
+				<div class="col text-center">
 					<div class="btn-group">
 						<button type="button" title="Start roulette!" :disabled="pool.in.length === 0" @click="roulette" class="btn btn-primary">Go!</button>
 						<select v-model="type" title="Type of roulette!">
@@ -39,7 +39,7 @@
 					</div>
 				</div>
 
-				<div class="col-4 text-right">
+				<div class="col text-right">
 					<div v-if="pool.out.length != 0" class="btn-group">
 						<button type="button" title="Return all pockets to pool!" @click="out_to_in" class="btn btn-secondary"><img src="~@/assets/icons/feather/arrow-left.svg" /><span class="d-none d-lg-inline"> Return all</span></button>
 						<button v-if="this.pool.in.length > 0" type="button" title="Invert usable & used pockets!" @click="invert_in_and_out" class="btn btn-secondary"><img src="~@/assets/icons/feather/switch.svg" width="16" /><span class="d-none d-lg-inline"> Invert</span></button>
