@@ -111,7 +111,6 @@
 				this.pool_remove(result)
 			},
 			pocket_add: function (data) {
-				console.log(1);
 				this.pool_add(window.util.pocket_create(data));
 			},
 			pool_add: function (pocket) {

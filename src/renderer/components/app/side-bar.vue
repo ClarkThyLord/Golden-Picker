@@ -22,7 +22,6 @@
 		},
 		methods: {
 			pocket_create: function (data) {
-				console.log(2);
 				window.db.pocket_add(data);
 			}
 		}

@@ -65,8 +65,6 @@
 			create: function () {
 				if (!window.util.form_validate(this.$el.querySelector('#pocket-add form'))) return;
 
-				console.log(this.type);
-
 				this.$emit(this.type, {
 					img: (this.img === data_default().img) ? data_default().img : this.img,
 					name: this.name
