@@ -79,7 +79,8 @@
 							</i>
 						</div>
 
-						<div class="p-2">
+						<div class="p-2 d-flex">
+							<img src="~@/assets/icons/feather/trash.svg" title="Delete pocket from poo!" @click="pool_in_delete(index)" style="cursor: pointer;" class="m-2" />
 							<img src="~@/assets/icons/feather/arrow-right.svg" title="Remove pocket from pool!" @click="pool_remove(index)" style="cursor: pointer;" class="m-2" />
 						</div>
 				  </div>
@@ -96,8 +97,9 @@
 					</div>
 
 					<div v-for="(pocket, index) in pool_out_filtered" :data-id="index" class="d-flex bg-secondary text-white border border-dark shadow">
-						<div class="p-2">
+						<div class="p-2 d-flex">
 							<img src="~@/assets/icons/feather/arrow-left.svg" title="Add pocket to pool!" @click="pool_add(index)" style="cursor: pointer;" class="m-2" />
+							<img src="~@/assets/icons/feather/trash.svg" title="Delete pocket from poo!" @click="pool_out_delete(index)" style="cursor: pointer;" class="m-2" />
 						</div>
 
 						<div class="p-2 w-100 text-right text-truncate">
@@ -189,6 +191,12 @@
 				} else {
 					this.pool.out.push((this.pool.in.splice(pocket, 1))[0])
 				}
+			},
+			pool_in_delete: function (pocket) {
+				this.pool.in.splice(pocket, 1)
+			},
+			pool_out_delete: function (pocket) {
+				this.pool.out.splice(pocket, 1)
 			},
 			invert_in_and_out: function () {
 				let temp = this.pool.in;
