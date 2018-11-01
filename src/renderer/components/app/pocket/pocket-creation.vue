@@ -1,9 +1,9 @@
 <template>
-  <div role="dialog" aria-hidden="true" class="modal fade" id="pocket-add">
+  <div role="dialog" aria-hidden="true" class="modal fade" :id="'pocket-' + this.type">
 		<div role="document" class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Pocket Create</h5>
+					<h5 class="modal-title text-capitalize">Pocket {{ this.type }}</h5>
 
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -34,7 +34,7 @@
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-					<button type="button" @click="create" :disabled="!valid" class="btn btn-success">Create</button>
+					<button type="button" @click="create" :disabled="!valid" class="btn btn-success text-capitalize">{{ this.type }}</button>
 				</div>
 			</div>
 		</div>
@@ -52,6 +52,7 @@
 
   export default {
     name: 'pocket-creation',
+		props: ['type'],
 		data: function () {
 			return data_default()
 		},
@@ -64,12 +65,14 @@
 			create: function () {
 				if (!window.util.form_validate(this.$el.querySelector('#pocket-add form'))) return;
 
-				this.$emit('create', {
+				console.log(this.type);
+
+				this.$emit(this.type, {
 					img: (this.img === data_default().img) ? data_default().img : this.img,
 					name: this.name
 				})
 
-				$('#pocket-add').modal('hide')
+				$('#pocket-' + this.type).modal('hide')
 			},
 			image_change: function (e) {
 				this.valid = false;

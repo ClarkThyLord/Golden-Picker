@@ -1,6 +1,6 @@
 <template>
   <div class="m-0 p-0 h-100 d-flex flex-column" id="action-space">
-		<pocket-creation v-on:create="create"></pocket-creation>
+		<pocket-creation :type="'add'" v-on:add="pocket_add"></pocket-creation>
 
 		<div style="max-height: 50%;" class="m-2 w-100 h-100 flex-fill">
 			<div v-if="result" class="text-center">
@@ -110,7 +110,7 @@
 				Object.assign(this.result, this.pool.in[result]);
 				this.pool_remove(result)
 			},
-			create: function (data) {
+			pocket_add: function (data) {
 				console.log(1);
 				this.pool_add(window.util.pocket_create(data));
 			},
