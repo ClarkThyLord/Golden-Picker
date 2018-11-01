@@ -7,11 +7,12 @@ class db {
 
 		this.events = new events.EventEmitter()
 
-		this._pocket = {
-			id: '',
-			img: '',
-			name: '',
-			pockets: []
+		this.structure = {
+			pocket: {
+				img: '',
+				name: '',
+				pockets: []
+			}
 		}
 
 		this.data = []
@@ -20,7 +21,7 @@ class db {
 	async default() {
 		let data = await window.$.getJSON('./static/data.json')
 		for (let student of data) {
-			this.pocket_create(student)
+			this.pocket_add(student)
 		}
 	}
 
@@ -77,16 +78,6 @@ class db {
 		}
 	}
 
-	pocket_data_validation(data) {
-		let valid_data = {}
-
-		for (let property of Object.keys(data)) {
-			if (this._pocket.hasOwnProperty(property)) valid_data[property] = data[property]
-		}
-
-		return valid_data
-	}
-
 	pocket_search(queries, raw) {
 		let results = []
 
@@ -111,16 +102,16 @@ class db {
 		}
 	}
 
-	pocket_create(data) {
+	pocket_add(data) {
 		let id = localStorage.getItem('id_count') || "0";
-		let pocket = Object.assign({}, this._pocket, this.pocket_data_validation(data), {id: id});
+		let pocket = Object.assign(window.util.pocket_create(data), {id: id});
 		localStorage.setItem('id_count', JSON.parse(id) + 1)
 
 		this.data.push(pocket);
 
 		this.save()
 
-		this.events.emit('pocket_create')
+		this.events.emit('pocket_add')
 
 		return {
 			success: true,

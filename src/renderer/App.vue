@@ -3,7 +3,6 @@
 		<new-user></new-user>
 		<settings-menu></settings-menu>
 
-		<pocket-add></pocket-add>
 		<pocket-remove></pocket-remove>
 		<pocket-info></pocket-info>
 
@@ -26,7 +25,6 @@
 	import SideBar from './components/app/side-bar'
 	import ActionSpace from './components/app/action-space'
 
-	import PocketAdd from './components/app/pocket/pocket-add'
 	import PocketRemove from './components/app/pocket/pocket-remove'
 	import PocketInfo from './components/app/pocket/pocket-info'
 
@@ -42,7 +40,6 @@
 			SideBar,
 			ActionSpace,
 
-			PocketAdd,
 			PocketRemove,
 			PocketInfo
 		},

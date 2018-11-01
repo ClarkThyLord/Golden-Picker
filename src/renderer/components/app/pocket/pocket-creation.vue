@@ -51,7 +51,7 @@
 	}
 
   export default {
-    name: 'pocket-add',
+    name: 'pocket-creation',
 		data: function () {
 			return data_default()
 		},
@@ -62,12 +62,12 @@
 				window.util.form_reset($('#pocket-add form'))
 			},
 			create: function () {
-				if (!window.util.form_validate($('#pocket-add form'))) return;
+				if (!window.util.form_validate(this.$el.querySelector('#pocket-add form'))) return;
 
-				window.db.pocket_create({
+				this.$emit('create', {
 					img: (this.img === data_default().img) ? data_default().img : this.img,
 					name: this.name
-				});
+				})
 
 				$('#pocket-add').modal('hide')
 			},

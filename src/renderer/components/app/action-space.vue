@@ -1,5 +1,7 @@
 <template>
   <div class="m-0 p-0 h-100 d-flex flex-column" id="action-space">
+		<pocket-creation v-on:create="create"></pocket-creation>
+
 		<div style="max-height: 50%;" class="m-2 w-100 h-100 flex-fill">
 			<div v-if="result" class="text-center">
 				<img v-if="result.img" :src="result.img" alt="POCKET IMG" style="min-width: 10%; max-width: 15%;" class="m-1 img-fluid rounded" />
@@ -21,7 +23,6 @@
 					<div class="btn-group">
 						<button type="button" title="Start roulette!" :disabled="pool.in.length === 0" @click="roulette" class="btn btn-primary">Go!</button>
 						<button type="button" title="Settings for roulette!" data-toggle="modal" data-target="#settings-menu" class="btn btn-secondary">⚙<span class="d-none d-lg-inline"> Settings</span></button>
-						<button type="button" title="Add a temporary pocket to the roulette!" class="btn btn-success">+<span class="d-none d-lg-inline"> Add</span></button>
 						<button type="button" title="Reset roulette!" @click="reset" class="btn btn-danger">↻<span class="d-none d-lg-inline"> Reset</span></button>
 					</div>
 				</div>
@@ -36,7 +37,7 @@
 			<div style="height: 0 !important;" class="m-1 flex-fill row">
 				<!-- IN POOL -->
 				<div style="overflow-x: hidden; overflow-y: auto; border-style: dashed !important; border-width: 3px !important;" class="m-1 p-0 col pocket-space pocket-drop border rounded" data-pool="in">
-					<div v-if="pool.in.length === 0" class="p-3 h-100 text-muted text-center">
+					<div v-if="pool.in.length === 0" class="p-3 text-muted text-center">
 						<h3>
 							<i>
 								add or drop pockets!
@@ -57,6 +58,10 @@
 							<img src="~@/assets/icons/feather/arrow-right.svg" title="Remove pocket from pool!" @click="pool_remove(index)" style="cursor: pointer;" class="m-2" />
 						</div>
 				  </div>
+
+					<div style="bottom: 8px;" class="m-2 w-100 position-sticky text-center">
+						<button type="button" title="Create a pocket!" data-toggle="modal" data-target="#pocket-add" class="btn btn-success">+<span class="d-none d-sm-inline"> Add</span></button>
+					</div>
 				</div>
 
 				<!-- OUT POOL -->
@@ -81,7 +86,7 @@
 </template>
 
 <script>
-	import pocket from './pocket/pocket'
+	import PocketCreation from './pocket/pocket-creation'
 
 	function data() {
 		return {
@@ -96,7 +101,7 @@
   export default {
     name: 'action-space',
 		components: {
-			pocket
+			PocketCreation
 		},
 		data: data,
 		methods: {
@@ -104,6 +109,10 @@
 				let result = Math.floor(Math.random() * this.pool.in.length)
 				Object.assign(this.result, this.pool.in[result]);
 				this.pool_remove(result)
+			},
+			create: function (data) {
+				console.log(1);
+				this.pool_add(window.util.pocket_create(data));
 			},
 			pool_add: function (pocket) {
 				if (typeof pocket === 'object') {

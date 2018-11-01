@@ -4,7 +4,9 @@ export default {
 	url_open: url_open,
 	input_validate: input_validate,
 	form_reset: form_reset,
-	form_validate: form_validate
+	form_validate: form_validate,
+	pocket_data_validation: pocket_data_validation,
+	pocket_create: pocket_create
 }
 
 function url_open(link) {
@@ -98,4 +100,18 @@ function form_validate(form) {
 	})
 
 	return valid;
+}
+
+function pocket_data_validation(data) {
+	let valid_data = {}
+
+	for (let property of Object.keys(data)) {
+		if (window.db.structure.pocket.hasOwnProperty(property)) valid_data[property] = data[property]
+	}
+
+	return valid_data
+}
+
+function pocket_create(data) {
+	return Object.assign({}, window.db.structure.pocket, pocket_data_validation(data));
 }
