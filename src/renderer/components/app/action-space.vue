@@ -3,7 +3,7 @@
 		<pocket-creation :type="'add'" v-on:add="pocket_add"></pocket-creation>
 
 		<div style="overflow-x: hidden; overflow-y: auto; max-height: 50%;" class="w-100 h-100 flex-fill">
-			<div v-for="set in results" class="m-2 p-1 row text-center border rounded">
+			<div v-for="set in results" class="m-2 p-1 flex-fill row text-center border rounded">
 				<div v-for="pocket in set" class="m-2 col">
 					<img v-if="pocket.img" :src="pocket.img" alt="POCKET IMG" style="min-width: 10%; max-width: 15%;" class="m-1 img-fluid rounded" />
 
