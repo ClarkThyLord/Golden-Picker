@@ -37,7 +37,11 @@
 			<div style="height: 0 !important;" class="m-1 flex-fill row">
 				<!-- IN POOL -->
 				<div style="overflow-x: hidden; overflow-y: auto; border-style: dashed !important; border-width: 3px !important;" class="m-1 p-0 col pocket-space pocket-drop border rounded" data-pool="in">
-					<div v-if="pool.in.length === 0" class="p-3 text-muted text-center">
+					<div v-if="pool.in.length != 0" style="top: 8px;" class="m-2 w-100 position-sticky text-center">
+						<input type="text" placeholder="Search..." v-model="pool.in_filter" class="w-50 rounded" />
+					</div>
+
+					<div v-if="pool.in.length == 0" class="p-3 text-muted text-center">
 						<h3>
 							<i>
 								add or drop pockets!
@@ -45,7 +49,7 @@
 						</h3>
 					</div>
 
-				  <div v-for="(pocket, index) in pool.in" :data-id="index" class="d-flex bg-secondary text-white border border-dark shadow">
+				  <div v-for="(pocket, index) in pool_in_filtered" :data-id="index" class="d-flex bg-secondary text-white border border-dark shadow">
 						<div class="p-2 w-100 text-truncate">
 							<img v-if="!!pocket.img" :src="pocket.img" alt="POCKET IMG" width="32" height="32" class="m-1 rounded" />
 
@@ -66,7 +70,11 @@
 
 				<!-- OUT POOL -->
 				<div style="overflow-x: hidden; overflow-y: auto; border-style: dashed !important; border-width: 3px !important;" class="m-1 p-0 col pocket-space pocket.drop border rounded" data-pool="out">
-				  <div v-for="(pocket, index) in pool.out" :data-id="index" class="d-flex bg-secondary text-white border border-dark shadow">
+					<div v-if="pool.out.length != 0" style="top: 8px;" class="m-2 w-100 position-sticky text-center">
+						<input type="text" placeholder="Search..." v-model="pool.out_filter" class="w-50 rounded" />
+					</div>
+
+					<div v-for="(pocket, index) in pool_out_filtered" :data-id="index" class="d-flex bg-secondary text-white border border-dark shadow">
 						<div class="p-2">
 							<img src="~@/assets/icons/feather/arrow-left.svg" title="Add pocket to pool!" @click="pool_add(index)" style="cursor: pointer;" class="m-2" />
 						</div>
@@ -92,7 +100,9 @@
 		return {
 			result: {},
 			pool: {
+				in_filter: '',
 				in: [],
+				out_filter: '',
 				out: []
 			}
 		}
@@ -141,6 +151,22 @@
 			},
 			reset: function () {
 				Object.assign(this.$data, data())
+			}
+		},
+		computed: {
+			pool_in_filtered: function () {
+				if (this.pool.in_filter == '') {
+					return this.pool.in
+				} else {
+					return this.pool.in.filter(pocket => pocket.name.toLowerCase().indexOf(this.pool.in_filter) != -1)
+				}
+			},
+			pool_out_filtered: function () {
+				if (this.pool.out_filter == '') {
+					return this.pool.out
+				} else {
+					return this.pool.out.filter(pocket => pocket.name.toLowerCase().indexOf(this.pool.out_filter) != -1)
+				}
 			}
 		},
 		mounted: function () {
