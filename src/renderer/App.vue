@@ -26,9 +26,6 @@
 	import PocketRemove from './components/app/pocket/pocket-remove'
 	import PocketInfo from './components/app/pocket/pocket-info'
 
-	window.settings = {
-	}
-
   export default {
     name: 'golden-picker',
 		components: {

@@ -22,13 +22,21 @@
 				<div class="col-4 text-center">
 					<div class="btn-group">
 						<button type="button" title="Start roulette!" :disabled="pool.in.length === 0" @click="roulette" class="btn btn-primary">Go!</button>
-						<button type="button" title="Settings for roulette!" data-toggle="modal" data-target="#settings-menu" class="btn btn-secondary">⚙<span class="d-none d-lg-inline"> Settings</span></button>
+						<select v-model="type">
+							<option value="0">
+								Individuals
+							</option>
+							<option value="1">
+								Teams
+							</option>
+						</select>
+						<input v-if="type == '1'" type="number" title="Number of teams!" min="1" v-model="grp_num" />
 						<button type="button" title="Reset roulette!" @click="reset" class="btn btn-danger">↻<span class="d-none d-lg-inline"> Reset</span></button>
 					</div>
 				</div>
 
 				<div class="col-4 text-right">
-					<div class="btn-group">
+					<div v-if="pool.out.length != 0" class="btn-group">
 						<button type="button" title="Return all pockets to pool!" :disabled="pool.out.length == 0" @click="out_to_in" class="btn btn-secondary"><img src="~@/assets/icons/feather/arrow-left.svg" /><span class="d-none d-lg-inline"> Return all</span></button>
 					</div>
 				</div>
@@ -69,8 +77,8 @@
 				</div>
 
 				<!-- OUT POOL -->
-				<div style="overflow-x: hidden; overflow-y: auto; border-style: dashed !important; border-width: 3px !important;" class="m-1 p-0 col pocket-space pocket.drop border rounded" data-pool="out">
-					<div v-if="pool.out.length != 0" style="top: 8px;" class="m-2 w-100 position-sticky text-center">
+				<div v-if="pool.out.length != 0" style="overflow-x: hidden; overflow-y: auto; border-style: dashed !important; border-width: 3px !important;" class="m-1 p-0 col pocket-space pocket.drop border rounded" data-pool="out">
+					<div style="top: 8px;" class="m-2 w-100 position-sticky text-center">
 						<input type="text" placeholder="Search..." v-model="pool.out_filter" class="w-50 rounded" />
 					</div>
 
@@ -98,6 +106,8 @@
 
 	function data() {
 		return {
+			type: 0,
+			grp_num: 1,
 			result: {},
 			pool: {
 				in_filter: '',
