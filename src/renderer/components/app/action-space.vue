@@ -33,8 +33,16 @@
 							</option>
 						</select>
 
-						<input v-if="type == '1'" type="number" title="Number of sets!" min="1" v-model="grp_num" />
-						<input v-if="type == '1'" type="number" title="Number of pockets per set!" min="1" v-model="grp_s_num" />
+						<div v-if="type == '1'" class="d-flex">
+							<div class="p-2 bg-secondary text-white">
+								<input type="checkbox" title="Automatic sets!" v-model:checked="grp_auto" />
+							</div>
+
+							<div v-if="!grp_auto" class="d-flex">
+								<input type="number" title="Number of sets!" min="1" v-model="grp_num" />
+								<input type="number" title="Number of pockets per set!" min="1" v-model="grp_s_num" />
+							</div>
+						</div>
 						<button type="button" title="Reset roulette!" @click="reset" class="btn btn-danger">↻<span class="d-none d-lg-inline"> Reset</span></button>
 					</div>
 				</div>
@@ -112,6 +120,7 @@
 	function data() {
 		return {
 			type: 0,
+			grp_auto: true,
 			grp_num: 1,
 			grp_s_num: 1,
 			results: [],
@@ -140,8 +149,11 @@
 
 					this.pool_remove(result)
 				} else if (this.type == 1){
-					for (let i = 0; i < this.grp_s_num; i++) {
-						for (let s = 0; s < this.grp_num; s++) {
+					let grp_num = (this.grp_auto ? 2 : this.grp_num);
+					let grp_s_num = (this.grp_auto ? Math.ceil(this.pool.in.length / grp_num) : this.grp_num);
+
+					for (let i = 0; i < grp_s_num; i++) {
+						for (let s = 0; s < grp_num; s++) {
 							let result = Math.floor(Math.random() * this.pool.in.length)
 
 							if (!this.results[s]) this.results.push([]);
