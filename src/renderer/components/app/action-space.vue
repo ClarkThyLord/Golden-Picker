@@ -12,12 +12,25 @@
 			</div>
 		</div>
 
-		<div style="height: 50%;" class="m-2 p-1 d-flex flex-column border rounded">
-			<div class="mt-1 btn-group justify-content-center row">
-				<button type="button" title="Start roulette!" :disabled="pool.in.length === 0" @click="roulette" class="btn btn-primary">Go!</button>
-				<button type="button" title="Settings for roulette!" data-toggle="modal" data-target="#settings-menu" class="btn btn-secondary">⚙ Settings</button>
-				<button type="button" title="Add a temporary pocket to the roulette!" class="btn btn-success">+ Add</button>
-				<button type="button" title="Reset roulette!" @click="reset" class="btn btn-danger">↻ Reset</button>
+		<div style="height: 50%;" class="m-2 p-2 d-flex flex-column border rounded">
+			<div class="d-flex">
+				<div class="col-4 text-left">
+				</div>
+
+				<div class="col-4 text-center">
+					<div class="btn-group">
+						<button type="button" title="Start roulette!" :disabled="pool.in.length === 0" @click="roulette" class="btn btn-primary">Go!</button>
+						<button type="button" title="Settings for roulette!" data-toggle="modal" data-target="#settings-menu" class="btn btn-secondary">⚙<span class="d-none d-lg-inline"> Settings</span></button>
+						<button type="button" title="Add a temporary pocket to the roulette!" class="btn btn-success">+<span class="d-none d-lg-inline"> Add</span></button>
+						<button type="button" title="Reset roulette!" @click="reset" class="btn btn-danger">↻<span class="d-none d-lg-inline"> Reset</span></button>
+					</div>
+				</div>
+
+				<div class="col-4 text-right">
+					<div class="btn-group">
+						<button type="button" title="Return all pockets to pool!" :disabled="pool.out.length == 0" @click="out_to_in" class="btn btn-secondary"><img src="~@/assets/icons/feather/arrow-left.svg" /><span class="d-none d-lg-inline"> Return all</span></button>
+					</div>
+				</div>
 			</div>
 
 			<div style="height: 0 !important;" class="m-1 flex-fill row">
@@ -104,6 +117,18 @@
 					this.pool.out.push(pocket);
 				} else {
 					this.pool.out.push((this.pool.in.splice(pocket, 1))[0])
+				}
+			},
+			in_to_out: function () {
+				if (this.pool.in.length == 0) return;
+				while (this.pool.in.length > 0) {
+					this.pool_remove(0)
+				}
+			},
+			out_to_in: function () {
+				if (this.pool.out.length == 0) return;
+				while (this.pool.out.length > 0) {
+					this.pool_add(0)
 				}
 			},
 			reset: function () {
