@@ -2,19 +2,21 @@
   <div class="m-0 p-0 h-100 d-flex flex-column" id="action-space">
 		<pocket-creation :type="'add'" v-on:add="pocket_add"></pocket-creation>
 
-		<div style="max-height: 50%;" class="m-2 w-100 h-100 flex-fill">
-			<div v-if="result" class="text-center">
-				<img v-if="result.img" :src="result.img" alt="POCKET IMG" style="min-width: 10%; max-width: 15%;" class="m-1 img-fluid rounded" />
+		<div style="overflow-x: hidden; overflow-y: auto; max-height: 50%;" class="w-100 h-100 flex-fill">
+			<div v-for="set in results" class="m-2 p-1 row text-center border rounded">
+				<div v-for="pocket in set" class="m-2 col">
+					<img v-if="pocket.img" :src="pocket.img" alt="POCKET IMG" style="min-width: 10%; max-width: 15%;" class="m-1 img-fluid rounded" />
 
-				<h1>
-					<i>
-						{{ result.name }}
-					</i>
-				</h1>
+					<h1>
+						<i>
+							{{ pocket.name }}
+						</i>
+					</h1>
+				</div>
 			</div>
 		</div>
 
-		<div style="height: 50%;" class="m-2 p-2 d-flex flex-column border rounded">
+		<div style="height: 50%;" class="m-2 p-2 d-flex flex-column bg-white border rounded">
 			<div class="d-flex">
 				<div class="col-4 text-left">
 				</div>
@@ -40,7 +42,7 @@
 				<div class="col-4 text-right">
 					<div v-if="pool.out.length != 0" class="btn-group">
 						<button type="button" title="Return all pockets to pool!" @click="out_to_in" class="btn btn-secondary"><img src="~@/assets/icons/feather/arrow-left.svg" /><span class="d-none d-lg-inline"> Return all</span></button>
-						<button type="button" title="Invert usable & used pockets!" @click="invert_in_and_out" class="btn btn-secondary"><img src="~@/assets/icons/feather/switch.svg" width="16" /><span class="d-none d-lg-inline"> Invert</span></button>
+						<button v-if="this.pool.in.length > 0" type="button" title="Invert usable & used pockets!" @click="invert_in_and_out" class="btn btn-secondary"><img src="~@/assets/icons/feather/switch.svg" width="16" /><span class="d-none d-lg-inline"> Invert</span></button>
 					</div>
 				</div>
 			</div>
@@ -112,7 +114,7 @@
 			type: 0,
 			grp_num: 1,
 			grp_s_num: 1,
-			result: {},
+			results: [],
 			pool: {
 				in_filter: '',
 				in: [],
@@ -130,9 +132,34 @@
 		data: data,
 		methods: {
 			roulette: function () {
-				let result = Math.floor(Math.random() * this.pool.in.length)
-				Object.assign(this.result, this.pool.in[result]);
-				this.pool_remove(result)
+				this.results = [];
+				if (this.type == 0) {
+					let result = Math.floor(Math.random() * this.pool.in.length)
+
+					this.results.push([this.pool.in[result]]);
+
+					this.pool_remove(result)
+				} else if (this.type == 1){
+					for (let i = 0; i < this.grp_s_num; i++) {
+						for (let s = 0; s < this.grp_num; s++) {
+							let result = Math.floor(Math.random() * this.pool.in.length)
+
+							if (!this.results[s]) this.results.push([]);
+
+							this.results[s].push(this.pool.in[result])
+
+							this.pool_remove(result)
+
+							if (this.pool.in.length == 0) {
+								break;
+							}
+						}
+
+						if (this.pool.in.length == 0) {
+							break;
+						}
+					}
+				}
 			},
 			pocket_add: function (data) {
 				this.pool_add(window.util.pocket_create(data));
