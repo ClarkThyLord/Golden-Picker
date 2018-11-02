@@ -11,8 +11,7 @@ class db {
 			pocket: {
 				img: '',
 				name: '',
-				chance: 1,
-				pockets: []
+				chance: 1
 			}
 		}
 
