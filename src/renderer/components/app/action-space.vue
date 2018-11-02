@@ -154,6 +154,7 @@
 				}
 			},
 			sink_get: function () {
+				this.sink_update();
 				return this.sink[Math.floor(Math.random() * this.sink.length)];
 			},
 			roulette: function () {
@@ -166,10 +167,18 @@
 					this.pool_remove(result)
 				} else if (this.type == 1){
 					let grp_num = (this.grp_auto ? 2 : this.grp_num);
-					let grp_s_num = (this.grp_auto ? Math.ceil(this.pool.in.length / grp_num) : this.grp_num);
+					let grp_s_num = (this.grp_auto ? Math.ceil(this.pool.in.length / grp_num) : this.grp_s_num);
 
 					for (let i = 0; i < grp_s_num; i++) {
+						if (this.pool.in.length == 0) {
+							break;
+						}
+
 						for (let s = 0; s < grp_num; s++) {
+							if (this.pool.in.length == 0) {
+								break;
+							}
+
 							let result = this.sink_get();
 
 							if (!this.results[s]) this.results.push([]);
@@ -177,14 +186,6 @@
 							this.results[s].push(this.pool.in[result])
 
 							this.pool_remove(result)
-
-							if (this.pool.in.length == 0) {
-								break;
-							}
-						}
-
-						if (this.pool.in.length == 0) {
-							break;
 						}
 					}
 				}
