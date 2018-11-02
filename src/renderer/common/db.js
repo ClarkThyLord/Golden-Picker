@@ -122,22 +122,21 @@ class db {
 		}
 	}
 
-	pocket_remove(ids) {
-		let pockets = []
+	pocket_remove(id) {
+		let pocket = {}
 
-		for (let id of ids) {
-			if (this.data[id]) {
-				pockets.push(this.data.splice(id, 1)[0])
-			}
+		id = this.data.map(function(pocket) { return pocket.id; }).indexOf(id + '')
+		if (id != -1) {
+			pocket = this.data.splice(id, 1)[0]
+
+			this.save()
+
+			this.events.emit('pocket_remove')
 		}
 
-		this.save()
-
-		this.events.emit('pocket_remove')
-
 		return {
-			success: !pocket.length ? false : true,
-			data: pockets
+			success: id != -1 ? true : false,
+			data: pocket
 		}
 	}
 }

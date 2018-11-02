@@ -38,7 +38,8 @@
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" :disabled="!valid" class="btn btn-danger" data-dismiss="modal">Close</button>
+					<button type="button" :disabled="!valid" @click="remove" class="btn btn-danger">Remove</button>
+					<button type="button" :disabled="!valid" data-dismiss="modal" class="btn btn-success">Close</button>
 				</div>
 			</div>
 		</div>
@@ -65,10 +66,8 @@
 
 				window.util.form_reset($('#pocket-info form'))
 			},
-			create: function () {
-				if (!window.util.form_validate(this.$el.querySelector('#pocket-add form'))) return;
-
-				this.$emit('update', this.pocket)
+			remove: function () {
+				db.pocket_remove(this.pocket.id)
 
 				$('#pocket-info').modal('hide')
 			},
