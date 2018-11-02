@@ -152,7 +152,6 @@
 						this.sink.push(i)
 					}
 				}
-				console.log(JSON.stringify(this.sink));
 			},
 			sink_get: function () {
 				return this.sink[Math.floor(Math.random() * this.sink.length)];
@@ -252,13 +251,7 @@
 		},
 		watch: {
 			'pool.in': function () {
-				this.sink = []
-				for (let i = 0; i < this.pool.in.length; i++) {
-					for (let c = 0; c < this.pool.in[i].chance; c++) {
-						this.sink.push(i)
-					}
-				}
-				console.log(JSON.stringify(this.sink));
+				this.sink_update();
 			}
 		},
 		mounted: function () {
