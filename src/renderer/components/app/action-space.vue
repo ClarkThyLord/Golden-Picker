@@ -166,7 +166,7 @@
 
 					this.pool_remove(result)
 				} else if (this.type == 1){
-					let grp_num = (this.grp_auto ? 2 : this.grp_num);
+					let grp_num = (this.grp_auto ? Math.ceil(Math.sqrt(this.pool.in.length)) : this.grp_num);
 					let grp_s_num = (this.grp_auto ? Math.ceil(this.pool.in.length / grp_num) : this.grp_s_num);
 
 					for (let i = 0; i < grp_s_num; i++) {
