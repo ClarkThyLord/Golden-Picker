@@ -11,6 +11,9 @@
 		<side-bar class="d-block col-md-4 col-lg-2"></side-bar>
 
 		<div style="position: fixed; bottom: 0px; right: 0px;" class="m-2 bg-light text-center border rounded shadow">
+			<div title="Reset!" onclick="window.db.reset()" style="cursor: pointer;" class="m-2">
+				⭮
+			</div>
 			<img src="~@/assets/icons/feather/github.svg" title="Check us out on GitHub!" onclick="window.util.url_open('https://github.com/ClarkThyLord/Golden-Picker');" style="cursor: pointer;" class="m-2" />
 		</div>
   </div>
