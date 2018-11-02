@@ -63,7 +63,7 @@
 			reset: function () {
 				Object.assign(this.$data, data_default())
 
-				window.util.form_reset($('#pocket-add form'))
+				window.util.form_reset($('#pocket-info form'))
 			},
 			create: function () {
 				if (!window.util.form_validate(this.$el.querySelector('#pocket-add form'))) return;
@@ -98,7 +98,7 @@
 					} else {
 						this.pocket = db.pocket_search({id: pocket}, true).data[0]
 					}
-					
+
 					$('#pocket-info').modal('show')
 				}
 			})
