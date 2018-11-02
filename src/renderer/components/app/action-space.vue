@@ -23,7 +23,7 @@
 
 				<div class="col text-center">
 					<div class="btn-group">
-						<button type="button" title="Start roulette!" :disabled="pool.in.length === 0" @click="roulette" class="btn btn-primary">Go!</button>
+						<button type="button" title="Start roulette!" :disabled="active || pool.in.length === 0" @click="roulette" class="btn btn-primary">Go!</button>
 						<select v-model="type" title="Type of roulette!">
 							<option value="0">
 								Individual
@@ -123,6 +123,7 @@
 
 	function data() {
 		return {
+			active: false,
 			type: 0,
 			grp_auto: true,
 			grp_num: 1,
@@ -158,16 +159,45 @@
 				return this.sink[Math.floor(Math.random() * this.sink.length)];
 			},
 			roulette: function () {
-				this.results = [];
+				let t = 10;
+				this.active = true;
+				this.results = [[]];
 				if (this.type == 0) {
-					let result = this.sink_get();
+					if (this.pool.in.length == 1) {
+						let result = this.sink_get();
+						this.results[0].splice(0, 1, this.pool.in[result])
+						this.pool_remove(result)
+						this.active = false;
+					} else {
+						let suspense = (time) => {
+							let result = this.sink_get();
+							this.results[0].splice(0, 1, this.pool.in[result])
 
-					this.results.push([this.pool.in[result]]);
+							time *= 1.75;
 
-					this.pool_remove(result)
-				} else if (this.type == 1){
+							if (time < 3000) return setTimeout(suspense, time, time);
+
+							this.pool_remove(result)
+							this.active = false;
+						};
+
+						setTimeout(suspense, t, t);
+					}
+				} else if (this.type == 1) {
 					let grp_num = (this.grp_auto ? Math.ceil(Math.sqrt(this.pool.in.length)) : this.grp_num);
 					let grp_s_num = (this.grp_auto ? Math.ceil(this.pool.in.length / grp_num) : this.grp_s_num);
+
+					let suspense = (time, _set, _index) => {
+						let result = this.sink_get();
+						this.results[_set].splice(_index, 1, this.pool.in[result])
+
+						time *= 1.75;
+
+						if (time < 3000) return setTimeout(suspense, time, time, _set, _index);
+
+						this.pool_remove(result)
+						this.active = false;
+					};
 
 					for (let i = 0; i < grp_s_num; i++) {
 						if (this.pool.in.length == 0) {
@@ -179,15 +209,15 @@
 								break;
 							}
 
-							let result = this.sink_get();
-
 							if (!this.results[s]) this.results.push([]);
 
+							let result = this.sink_get();
 							this.results[s].push(this.pool.in[result])
-
-							this.pool_remove(result)
+							setTimeout(suspense, t, t, s, i);
 						}
 					}
+
+					this.active = false;
 				}
 			},
 			pocket_add: function (data) {
