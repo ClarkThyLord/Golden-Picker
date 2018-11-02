@@ -48,6 +48,14 @@ function input_validate(input) {
 				valid = input_valid(input)
 			}
 			break;
+		case 'number':
+			if (input.value === '') {
+				valid = input_invalid(input)
+			}
+			else {
+				valid = input_valid(input)
+			}
+			break;
 		case 'color':
 			if (input.value === '') {
 				valid = input_invalid(input)
@@ -104,11 +112,9 @@ function form_validate(form) {
 
 function pocket_data_validation(data) {
 	let valid_data = {}
-
 	for (let property of Object.keys(data)) {
 		if (window.db.structure.pocket.hasOwnProperty(property)) valid_data[property] = data[property]
 	}
-
 	return valid_data
 }
 

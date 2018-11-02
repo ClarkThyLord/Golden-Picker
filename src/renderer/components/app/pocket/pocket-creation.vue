@@ -28,6 +28,11 @@
 								<label for="name" class="ml-2"><h5>Pocket name:</h5></label>
 								<input type="text" v-model="name" placeholder="Pocket name..." oninput="window.util.input_validate(this);" required class="form-control form-control-lg" name="name">
 							</div>
+
+							<div class="m-3">
+								<label for="chance" class="ml-2"><h5>Pocket chance:</h5></label>
+								<input type="number" min="1" max="100" placeholder="Pocket chance..." v-model="chance" oninput="window.util.input_validate(this);" required class="form-control form-control-lg" name="chance">
+							</div>
 						</div>
 					</form>
 				</div>
@@ -46,7 +51,8 @@
 		return {
 			valid: true,
 			img: '',
-			name: ''
+			name: '',
+			chance: 1
 		}
 	}
 
@@ -67,7 +73,8 @@
 
 				this.$emit(this.type, {
 					img: (this.img === data_default().img) ? data_default().img : this.img,
-					name: this.name
+					name: this.name,
+					chance: this.chance
 				})
 
 				$('#pocket-' + this.type).modal('hide')
@@ -88,7 +95,7 @@
 		},
 		mounted: function () {
 			$(() => {
-				$('#pocket-add').on('hidden.bs.modal', () => {
+				$('#pocket-' + this.type).on('hidden.bs.modal', () => {
 					this.reset()
 				})
 			})

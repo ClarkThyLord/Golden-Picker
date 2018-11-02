@@ -8,18 +8,21 @@
 			</i>
 		</div>
 
-		<!--
-			<div class="p-2">
-				<img src="~@/assets/icons/feather/info.svg" title="View pocket's info!" data-toggle="modal" data-target="#pocket-info" style="cursor: pointer;" class="m-2" />
-			</div>
-		-->
+		<div class="p-2">
+			<img src="~@/assets/icons/feather/info.svg" title="View pocket's info!" @click="open_info" style="cursor: pointer;" class="m-2" />
+		</div>
   </div>
 </template>
 
 <script>
   export default {
     name: 'pocket',
-		props: ['hint', 'pocket', 'draggable']
+		props: ['hint', 'pocket', 'draggable'],
+		methods: {
+			open_info: function () {
+				window.pocket_info(this.pocket.id)
+			}
+		}
   }
 </script>
 
